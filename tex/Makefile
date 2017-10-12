@@ -1,4 +1,4 @@
-PROJECT=mbc_msc_thesis
+PROJECT=farid_msc_thesis
 TEX=pdflatex
 BIBTEX=bibtex
 BUILDTEX=$(TEX) $(PROJECT).tex
