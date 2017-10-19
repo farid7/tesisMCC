@@ -1,4 +1,4 @@
-%!TEX root = ../mbc_msc_thesis.tex
+%!TEX root = ../farid_msc_thesis.tex
 
 \chapter{Related work}
 \label{ch:related_work}
@@ -8,7 +8,7 @@ lalala
 %
 \subsection{Text mining}
 %
-Text mining (\textit{"knowledge discovery from textual databases"} \cite{tan1999text}) is the process and techniques used to extract relevant and non trivial information from unstructured text data.  In general, text data can be analyzed using lexical approaches (for example, \textit{Part-of-Speech tagging}) or using a vector space model (for example, Word Embeddings algorithm \cite{compositionality2013Mikolov}). In order to extract meaningful information from text, they are usually represented according to their semantic rather than using string-based approaches ~\cite{aggarwal2012mining}.
+Text mining (\textit{"knowledge discovery from textual databases"} \cite{tan1999text}) is the process and techniques used to extract relevant and non trivial information from unstructured text data.  In general, text data can be analyzed using lexical, sintactic or semantic approaches (for example, \textit{Part-of-Speech tagging}) or a vector space model). In order to extract meaningful information from text, they are usually represented according to their semantic rather than using string-based approaches ~\cite{aggarwal2012mining}.
 
 Some fields related to text mining  involves information retrieval, text analysis, information extraction, clustering, categorization, visualization, database technology, machine learning and data mining ~\cite{tan1999text}.
 
@@ -51,8 +51,7 @@ Semantic word representation is based on the assumption that words with similar 
 In order to use a vector space model, it has been proposed  to represent words as dense vectors derived by training methods inspired in neural-network language modeling ~\cite{compositionality2013Mikolov}
 . These kind of representations are referred to as \textit{"Neural Embeddings"} or \textit{"Word Embeddings"}. 
 
-The main advantage of representing 
-texts with word embeddings is that they are easy to work with (they are efficiently computational throw a low-dimensional matrix operations). On the other hand, word embeddings are considered opaque, in the sense that it is hard to assign meanings to the dimensions of the induced representation ~\cite{compositionality2013Mikolov}. 
+The main advantage of representing texts using word embeddings is that they are easy to work with (they are efficiently computational throw a low-dimensional matrix operations). On the other hand, word embeddings are considered opaque, in the sense that it is hard to assign meanings to the dimensions of the induced representation ~\cite{compositionality2013Mikolov}. 
 
 \subsubsection{Skip-Gram Model}
 The skip-gram neural model introduced by Mikolov et al. was trained using the negative-sampling procedure. 
@@ -83,7 +82,7 @@ Mikolov et al. explored this approach in a multidimensional vector space where s
 \subsubsection{Composition by vector mixtures}
 The most intuitive way of composing two word represented by vectors is by adding them (\textit{additive approach}) or multiplying them (\textit{multiplicative approach}).  The \textit{weighted additive model}, is when vectors are modified by a scalar value before summing them \cite{mitchell2010composition}, this approach works well in tasks of predicting human similarity judgments about adjective-noun, noun-noun, verb-noun and noun-verb phrases.
 
-   The components of additive vectors inherit the cumulative score mass from the input components. Multiplication, captures the interaction between the values in the input components. 
+The components of additive vectors inherit the cumulative score mass from the input components. Multiplication, captures the interaction between the values in the input components. 
    
 
 %
@@ -190,6 +189,7 @@ $\cdot$ \textbf{or}.- Maximum or algebraic sum (eg. temperature = high $\vee$ pr
 \label{fuzzySet11}
 	\mu_C = max(\mu_A,\mu_B) 
 \end{equation}
+
 \begin{equation}
 \label{fuzzySet12}
 	\mu_C = \mu_A + \mu_B - \mu_A\bullet\mu_B
@@ -203,6 +203,7 @@ $\cdot$ \textbf{and}.- Minimum or algebraic product (eg. temperature = low $\wed
 \label{fuzzySet21}
 	\mu_C = min(\mu_A, \mu_B) 
 \end{equation}
+
 \begin{equation}
 \label{fuzzySet22}
 	\mu_C = min(\mu_A, \mu_B) 
@@ -218,7 +219,84 @@ $\cdot$ \textbf{not}.- Complement of a fuzzy set (eg. $\neg$ low = not(low)).
 \end{center}
 %
 
+\subsection{Latent Dirichlet Allocations}
+Description of the Latent Dirichlet Allocation (LDA) algorithm, 
+that find \textit{n} topics in a document, and assigns a certain probability to each word to be part of a given topic. 
 
+Once this algorithm was ``trained'', it is possible to make a query asking for ``proportions'' of probabilities that a query belongs to those \textit{n} topics.
+
+\begin{figure}[h]
+	\label{fig:lda_esquema}
+	\includegraphics[width=\textwidth]{Smoothed_LDA.png}
+    \caption{LDA diagram from wikipedia.}
+\end{figure}
+
+\subsection{Term Frequency- Inverse Document Frequency}
+This form is used to proyect text data into a vectorial space. This algorithm use as input the well-known \textit{BagOfWords} (BOW) text representations, that builds a matrix where each row represent a document, and each column represent a word. In this way, a text corpus is represented as a matrix that captures the frecuency of each words of each document. 
+
+Term -frequency establishes that most frequent words (terms \textit{t}) are the most important in a document \textit{d} (if a word is repeated many times, is because it should be important and relevant) (Eq. \ref{tf}).
+
+\begin{center}
+\begin{equation}
+\label{tf}
+	tf(t,d) = \frac{f(t,d)}{\max{f(w,d) : w \in d}}
+\end{equation}
+\end{center}
+
+Inverse-document-frequency establishes that if a word is repited many times in a corpus (in many documents), so, that word is not that important at all (stop words is an example of this idea). (Eq. \ref{idf})
+
+\begin{center}
+\begin{equation}
+\label{idf}
+idf(t,D) = \log \frac{|D|}{| d \in D : t \in d |}
+\end{equation}
+\end{center}
+
+where \textbf{D} the cardinality of the corpus (number of documents), and \textit{t} denotes the terms (or words) in a document.  
+
+
+Combining equations \ref{tf} and \ref{idf}, it is possible to compute the value of \textit{Term frequency-Inverse document frequency} (Eq. \ref{tfidf}) for a given word. In this way, high values are reached by words with high frequencies in some documents \textit{tf}, but words that appear in many documents are affected by the \textit{idf} term.
+
+\begin{center}
+\begin{equation}
+\label{tfidf}
+tfidf(t,d,D) = tf(t,d) * idf(t,D)
+\end{equation}
+\end{center}
+
+\subsection{Multinomial Naive Bayes Classifier}
+The difference between \textit{Multinomial Naive Bayes Classifier} (MNBC)and \textit{Naive Bayes Classifier} (NBC) is that NBC assumes conditional independence in each feature of the model, while MNBC uses a multinomial distribution for each feature (is a particular instance of NBC [paginaWeb]). 
+
+NBC:
+
+\begin{center}
+\begin{equation}
+\label{NBC}
+p(f_1,...,f_n|c) = \prod_{i=1}^{n}p(f_i|c)
+\end{equation}
+\end{center}
+
+so, the posterior prability is given by:
+
+\begin{center}
+\begin{equation}
+\label{pNBC}
+p(c|f_i,...,f_n) \propto p(c)p(f_1|c)...p(f_n|c)
+\end{equation}
+\end{center}
+
+\subsection{Random Forest (an ensemble method)}
+These kind of models (ensembled) are used to improve generalizability and robustness over a single estimator, combining prediction from many estimators. 
+
+
+\begin{figure}[h]
+	\label{fig:randomForest}
+	\includegraphics[width=\textwidth]{randomForestFigure.png}
+    \caption{Random Forest (ensemble method).}
+\end{figure}
+
+\subsection{Neural Networks}
+They are cool...
 
  %%% Local Variables: ***
  %%% mode:latex ***

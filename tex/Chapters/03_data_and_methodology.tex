@@ -1,9 +1,7 @@
-%!TEX root = ../mbc_msc_thesis.tex
+%!TEX root = ../farid_msc_thesis.tex
 
 \chapter{Data and methodology}
 \label{ch:methodology}
-
-lalala
 
 \section{Proposed Methodology for Ranking Business Models}
 %
@@ -27,12 +25,44 @@ For both sources of text data, a list of common stop-words \cite{ranks:stopwords
 
 A second pre-processing step consisted in implement a spelling-corrector algorithm, in order to avoid "words without meaning" due to typos.
 
+Some statistics about length aplications are show below:
+
+\texttt{.\\
+count    8815.000000\\
+mean     2152.153488\\
+std       921.940859\\
+min       213.000000\\
+25\%      1491.000000\\
+50\%      1970.000000\\
+75\%      2601.000000\\
+max      7340.000000\\
+Name: length, dtype: float64\\}
+
+In the next histogram (Fig. \ref{fig:allHistogram}), it is showed the histogram of length of applications, counting the number of words in each one. All answers from data applications were merged into one field, and the number of word of that field was assigned as a new ``length'' feature in the dataset. 
+
+\begin{figure}[h]
+	\label{fig:allHistogram}
+	\includegraphics[width=\textwidth]{lengthApplications.png}
+    \caption{Histogra of length of all applications.}
+\end{figure}
+
+Two more histograms (Fig. \ref{fig:clasesHistogram}) were created, in order to visualiza the lenght of applications according to the category they were assigned. The label ``-1'' was for those applications with overall scores less than 0 (assigned by \textit{expert judges}), and label ``+1''  with overall scores more than 0. 
+
+\begin{figure}[h]
+	\label{fig:clasesHistogram}
+	\includegraphics[width=\textwidth]{histogramClases.png}
+    \caption{Histogram of length of applications, where Clase=-1 if they have a bad score, 1 otherwise.}
+\end{figure}
+
 \subsubsection{Spelling correction algorithm}
 The spelling correction algorithm implemented in this work was developed by Peter Norving \cite{norvig2007write}. \\
 \textbf{How many words were corrected?}
 spellCorrectiongNorving
 
 \subsubsection{Correlations between words and scores}
+Bimodal distribution across scores, length of aplications is skewed to right.
+
+
 \begin{figure}[h]
 	\label{fig:correlaciones_tabla}
 	\includegraphics[width=\textwidth]{correlations_number_posible.png}
@@ -59,14 +89,6 @@ An Genetic approach
 
 \subsection{Ranking Applications}
 
-%
-\section{Results}
-%
-\begin{figure}[h]
-	\label{fig:partialResults1}
-	\includegraphics[width=\textwidth]{prediction_scores01_posible.png}
-    \caption{Partial results in the proposed model, identifying three topics: business, technology and need.}
-\end{figure}
 
 %
 \subsection{Dataset Description}
