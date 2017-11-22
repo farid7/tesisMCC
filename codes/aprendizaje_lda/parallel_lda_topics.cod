@@ -1,0 +1,130 @@
+HTTP/1.0 200 OK
+Content-Length: 185
+Content-Type: text/html; charset=utf-8
+Date: Thu, 18 May 2017 03:29:40 GMT
+Server: Werkzeug/0.12.1 Python/2.7.12
+
+[(0, 0.050444629848925636), (1, 0.11457027142969899), (2, 0.051229941008892832), (3, 0.21681907460932201), (4, 0.5124700583660764), (5, 0.028108369255223149), (6, 0.026357655481860965)]
+
+################################################################################
+[(0, 0.050427738980971096), (1, 0.11457577360802995), (2, 0.051237609841014838), (3, 0.21680440650219984), (4, 0.51249063893548907), (5, 0.028105752129911697), (6, 0.026358080002383513)]
+
+
+
+
+#################################################
+#####----Some codes-----#########################
+aux=$(http 0.0.0.0:5050/lda_model/"$(cat 14381)")
+
+
+
+id=14381
+aux=$(http 0.0.0.0:5050/lda_model/"$(cat $id )")
+
+echo $aux | sed 's/[0-9],/ /g; s/\[\|\]\|(\|)//g' | tr -s ' '
+
+
+
+
+echo $id, $( http 0.0.0.0:5050/lda_model/"$(cat $id )" | sed 's/[0-9],/ /g; s/\[\|\]\|(\|)//g' | tr -s ' ' )
+
+lda2csv(){
+id=$1
+echo $id, $( http 0.0.0.0:5050/lda_model/"$(cat $id )" | sed 's/[0-9],/ /g; s/\[\|\]\|(\|)//g' | tr -s ' ' )
+}
+
+
+lda2csv(){
+  while read id; do
+      echo $id
+  done
+}
+
+
+
+###############################################
+####################------------###############
+
+lda2csv(){
+id=$1
+echo $id, $( http 0.0.0.0:5050/lda_model/"$(cat $id )" | sed 's/[0-9],/ /g; s/\[\|\]\|(\|)//g' | tr -s ' ' )
+}
+
+export -f lda2csv
+
+
+###file Commands.txt
+
+for file in $(ls .); do
+echo 'id='$file';  lda2csv "$id"' >> Commands.txt
+done
+cat Commands.txt
+
+
+#Falta escalar la aplicacion de flask con Docker swarm,docker machine y docker compose
+parallel :::: Commands.txt
+
+##############################################
+############################################
+
+
+
+
+
+#################################################
+#Fuerza bruta 3 topicos
+echo $id,$( http 0.0.0.0:7070/lda_model/"$(cat $id )" | sed 's/\[\|\]//g;  s/ //g' ) | sed 's/,(/| (/g' 
+
+count=0
+echo 'id| t1| t2| t3' > /home/farid/Documents/investigacion_II/final_posible/pruebas/create_file_lda_topics/ids_lda_3topcis.csv
+for file in $(ls | grep -E [0-9+]); do
+count=$(( $count + 1 ))
+if ! (($count % 100)); then
+echo $file, $count
+fi
+id=$file
+echo $id,$( http 0.0.0.0:7070/lda_model/"$(cat $id )" | sed 's/\[\|\]//g;  s/ //g' ) | sed 's/,(/| (/g' >> /home/farid/Documents/investigacion_II/final_posible/pruebas/create_file_lda_topics/ids_lda_3topcis.csv
+done
+#################################################
+#Fuerza bruta 5 topicos
+echo $id,$( http 0.0.0.0:8080/lda_model/"$(cat $id )" | sed 's/\[\|\]//g;  s/ //g' ) | sed 's/,(/| (/g' 
+
+count=0
+echo 'id| t1| t2| t3| t4| t5' > /home/farid/Documents/investigacion_II/final_posible/pruebas/create_file_lda_topics/ids_lda_5topcis.csv
+for file in $(ls | grep -E [0-9+]); do
+count=$(( $count + 1 ))
+if ! (($count % 100)); then
+echo $file, $count
+fi
+id=$file
+echo $id,$( http 0.0.0.0:8080/lda_model/"$(cat $id )" | sed 's/\[\|\]//g;  s/ //g' ) | sed 's/,(/| (/g' >> /home/farid/Documents/investigacion_II/final_posible/pruebas/create_file_lda_topics/ids_lda_5topcis.csv
+done
+#################################################
+#Fuerza bruta 7 topicos
+echo $id,$( http 0.0.0.0:5050/lda_model/"$(cat $id )" | sed 's/\[\|\]//g;  s/ //g' ) | sed 's/,(/| (/g' 
+
+count=0
+echo 'id| t1| t2| t3| t4| t5| t6| t7' > /home/farid/Documents/investigacion_II/final_posible/pruebas/create_file_lda_topics/ids_lda_7topcis.csv
+for file in $(ls | grep -E [0-9+]); do
+count=$(( $count + 1 ))
+if ! (($count % 100)); then
+echo $file, $count
+fi
+id=$file
+echo $id,$( http 0.0.0.0:5050/lda_model/"$(cat $id )" | sed 's/\[\|\]//g;  s/ //g' ) | sed 's/,(/| (/g' >> /home/farid/Documents/investigacion_II/final_posible/pruebas/create_file_lda_topics/ids_lda_7topcis.csv
+done
+
+#################################################
+#Fuerza bruta 10 topicos
+echo $id,$( http 0.0.0.0:6060/lda_model/"$(cat $id )" | sed 's/\[\|\]//g;  s/ //g' ) | sed 's/,(/| (/g' 
+
+count=0
+echo 'id| t1| t2| t3| t4| t5| t6| t7| t8| t9| t10' > /home/farid/Documents/investigacion_II/final_posible/pruebas/create_file_lda_topics/ids_lda_10topcis.csv
+for file in $(ls | grep -E [0-9+]); do
+count=$(( $count + 1 ))
+if ! (($count % 100)); then
+echo $file, $count
+fi
+id=$file
+echo $id,$( http 0.0.0.0:6060/lda_model/"$(cat $id )" | sed 's/\[\|\]//g;  s/ //g' ) | sed 's/,(/| (/g' >> /home/farid/Documents/investigacion_II/final_posible/pruebas/create_file_lda_topics/ids_lda_10topcis.csv
+done

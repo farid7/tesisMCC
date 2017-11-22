@@ -1,0 +1,162 @@
+arary=0
+
+for t in $(seq 0 6); do 
+head -2 ids_lda_7topcis_raw.csv | tail -1 | cut -d '|' -f$(( $t + 2 ))  | grep -o '($t, [0-9].[0-9+])'
+done
+
+
+
+
+#############################################
+#Print lda topics by column
+
+
+for t in $(seq 0 6); do 
+head -2 ids_lda_7topcis_raw.csv | 
+tail -1 | 
+cut -d '|' -f$(( $t + 2 ))  
+done
+
+
+##############################################
+#Finding just probabilities 
+
+for t in $(seq 0 6); do 
+head -2 ids_lda_7topcis_raw.csv | 
+tail -1 | 
+cut -d '|' -f$(( $t + 2 ))  | 
+grep -oE '[0-9]\.[0-9]+'
+done
+
+
+##############################
+#finding probabilities by topics
+
+array=()
+line=$(head -2 ids_lda_7topcis_raw.csv | tail -1  )
+
+array+=($(echo $line | cut -d '|' -f1))
+for t in $(seq 0 6); do 
+aux=$(echo $line | 
+	grep -oE ${t},[0-9]\.[0-9]+ | 
+	sed 's/[0-9],//g')
+if [ $aux ]; then
+echo $aux,$t
+array+=($aux)
+else
+array+=(0)
+fi
+done
+
+echo "${array[@]}"
+
+##################################################
+######-7 topics
+##################################################
+echo 'id, t1, t2, t3' > ids_lda_3topcis_formated.csv
+
+cont=0
+
+cat ids_lda_3topcis.csv | while read line; do
+array=()
+array+=($(echo $line | cut -d '|' -f1))
+for t in $(seq 0 2); do 
+aux=$(echo $line | 
+	grep -oE ${t},[0-9]\.[0-9]+ | 
+	sed 's/[0-9],//g')
+if [ $aux ]; then
+array+=($aux)
+else
+array+=(0)
+fi
+done
+
+cont=$(( $cont + 1 ))
+if ! (($cont % 100)); then
+echo $cont, "${array[@]}"
+fi
+echo "${array[@]}" | tr ' ' ',' >> ids_lda_3topcis_formated.csv
+done
+##################################################
+######-7 topics
+##################################################
+echo 'id, t1, t2, t3, t4, t5' > ids_lda_5topcis_formated.csv
+
+cont=0
+
+cat ids_lda_5topcis.csv | while read line; do
+array=()
+array+=($(echo $line | cut -d '|' -f1))
+for t in $(seq 0 6); do 
+aux=$(echo $line | 
+	grep -oE ${t},[0-9]\.[0-9]+ | 
+	sed 's/[0-9],//g')
+if [ $aux ]; then
+array+=($aux)
+else
+array+=(0)
+fi
+done
+
+cont=$(( $cont + 1 ))
+if ! (($cont % 100)); then
+echo $cont, "${array[@]}"
+fi
+echo "${array[@]}" | tr ' ' ',' >> ids_lda_5topcis_formated.csv
+done
+
+##################################################
+######-7 topics
+##################################################
+echo 'id, t1, t2, t3, t4, t5, t6, t7' > ids_lda_7topcis_formated.csv
+
+cont=0
+
+cat ids_lda_7topcis_raw.csv | while read line; do
+array=()
+array+=($(echo $line | cut -d '|' -f1))
+for t in $(seq 0 6); do 
+aux=$(echo $line | 
+	grep -oE ${t},[0-9]\.[0-9]+ | 
+	sed 's/[0-9],//g')
+if [ $aux ]; then
+array+=($aux)
+else
+array+=(0)
+fi
+done
+
+cont=$(( $cont + 1 ))
+if ! (($cont % 100)); then
+echo $cont, "${array[@]}"
+fi
+echo "${array[@]}" | tr ' ' ',' >> ids_lda_7topcis_formated.csv
+done
+
+##################################################
+######-10 topics
+##################################################
+echo 'id, t1, t2, t3, t4, t5, t6, t7, t8, t9, t10' > ids_lda_10topcis_formated.csv
+
+cont=0
+
+cat ids_lda_10topcis.csv | while read line; do
+array=()
+array+=($(echo $line | cut -d '|' -f1))
+for t in $(seq 0 9); do 
+aux=$(echo $line | 
+	grep -oE ${t},[0-9]\.[0-9]+ | 
+	sed 's/[0-9],//g')
+if [ $aux ]; then
+array+=($aux)
+else
+array+=(0)
+fi
+done
+
+cont=$(( $cont + 1 ))
+if ! (($cont % 100)); then
+echo $cont, "${array[@]}"
+fi
+echo "${array[@]}" | tr ' ' ',' >> ids_lda_10topcis_formated.csv
+done
